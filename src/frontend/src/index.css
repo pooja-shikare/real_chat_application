@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "DM Sans";
+    --font-mono: "Geist Mono";
+    --radius: 0.875rem;
+
+    /* Warm ink-teal dark workspace — light mode is a cool paper companion */
+    --background: 0.97 0.008 210;
+    --foreground: 0.2 0.02 220;
+    --card: 1 0 0;
+    --card-foreground: 0.2 0.02 220;
+    --popover: 1 0 0;
+    --popover-foreground: 0.2 0.02 220;
+
+    /* Coral signal — the current user's own voice */
+    --primary: 0.62 0.19 28;
+    --primary-foreground: 0.99 0.005 28;
+
+    --secondary: 0.94 0.01 210;
+    --secondary-foreground: 0.28 0.02 220;
+    --muted: 0.94 0.01 210;
+    --muted-foreground: 0.52 0.02 220;
+
+    /* Teal presence accent — online state, active room, links */
+    --accent: 0.6 0.11 195;
+    --accent-foreground: 0.99 0.005 195;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.99 0.005 25;
+    --success: 0.62 0.15 155;
+    --success-foreground: 0.99 0.005 155;
+    --warning: 0.75 0.15 80;
+    --warning-foreground: 0.2 0.03 80;
+
+    --border: 0.9 0.01 210;
+    --input: 0.9 0.01 210;
+    --ring: 0.62 0.19 28;
+
+    --chart-1: 0.62 0.19 28;
+    --chart-2: 0.6 0.11 195;
+    --chart-3: 0.62 0.15 155;
+    --chart-4: 0.75 0.15 80;
+    --chart-5: 0.55 0.16 280;
+
+    --sidebar: 0.95 0.012 210;
+    --sidebar-foreground: 0.2 0.02 220;
+    --sidebar-primary: 0.62 0.19 28;
+    --sidebar-primary-foreground: 0.99 0.005 28;
+    --sidebar-accent: 0.9 0.015 210;
+    --sidebar-accent-foreground: 0.28 0.02 220;
+    --sidebar-border: 0.88 0.012 210;
+    --sidebar-ring: 0.62 0.19 28;
+  }
+
+  .dark {
+    /* Deep warm ink-teal — the primary mode */
+    --background: 0.17 0.02 205;
+    --foreground: 0.94 0.008 210;
+    --card: 0.21 0.022 205;
+    --card-foreground: 0.94 0.008 210;
+    --popover: 0.24 0.024 205;
+    --popover-foreground: 0.94 0.008 210;
+
+    --primary: 0.68 0.18 30;
+    --primary-foreground: 0.17 0.02 30;
+
+    --secondary: 0.26 0.024 205;
+    --secondary-foreground: 0.88 0.008 210;
+    --muted: 0.26 0.024 205;
+    --muted-foreground: 0.62 0.015 210;
+
+    --accent: 0.72 0.12 190;
+    --accent-foreground: 0.17 0.02 190;
+
+    --destructive: 0.62 0.2 25;
+    --destructive-foreground: 0.17 0.02 25;
+    --success: 0.72 0.16 155;
+    --success-foreground: 0.17 0.02 155;
+    --warning: 0.78 0.15 80;
+    --warning-foreground: 0.17 0.03 80;
+
+    --border: 0.3 0.024 205;
+    --input: 0.3 0.024 205;
+    --ring: 0.68 0.18 30;
+
+    --chart-1: 0.68 0.18 30;
+    --chart-2: 0.72 0.12 190;
+    --chart-3: 0.72 0.16 155;
+    --chart-4: 0.78 0.15 80;
+    --chart-5: 0.62 0.16 280;
+
+    --sidebar: 0.145 0.018 205;
+    --sidebar-foreground: 0.94 0.008 210;
+    --sidebar-primary: 0.68 0.18 30;
+    --sidebar-primary-foreground: 0.17 0.02 30;
+    --sidebar-accent: 0.24 0.024 205;
+    --sidebar-accent-foreground: 0.88 0.008 210;
+    --sidebar-border: 0.26 0.022 205;
+    --sidebar-ring: 0.68 0.18 30;
+  }
+
+  * {
+    @apply border-border;
+  }
+  html {
+    /* Dark mode is the primary intended experience for this app. */
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Message bubble tails — asymmetric corners mark who is speaking */
+  .bubble-own {
+    border-radius: 1.125rem 1.125rem 0.25rem 1.125rem;
+  }
+  .bubble-other {
+    border-radius: 1.125rem 1.125rem 1.125rem 0.25rem;
+  }
+
+  /* Faint dot grid gives the thread surface depth without gradients */
+  .surface-grid {
+    background-image: radial-gradient(
+      oklch(var(--muted-foreground) / 0.12) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+
+  /* Presence dot with a soft breathing halo */
+  .presence-ring {
+    box-shadow: 0 0 0 2px oklch(var(--background));
+  }
+}

@@ -1,0 +1,198 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type List__355132335<T> =
+  {
+    var blockIndex : Nat__227979830;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__227979830
+  };
+type List__836382695<T> = List__355132335<T>;
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type MemberKey__898044546 = (RoomId__552949913, UserId__781796212);
+type MessageId__291319400 = Nat;
+type MessageId__345815942 = Nat;
+type MessageId__810287564 = MessageId__291319400;
+type Message__454780518 =
+  {
+    body : Text;
+    id : MessageId__810287564;
+    roomId : RoomId__77126073;
+    sender : UserId__1023572875;
+    senderName : Text;
+    sentAt : Timestamp__753029554
+  };
+type Message__702227878 =
+  {
+    body : Text;
+    id : MessageId__345815942;
+    roomId : RoomId__1025152839;
+    sender : UserId__39544917;
+    senderName : Text;
+    sentAt : Timestamp__771871407
+  };
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__769816496 =
+  {
+    accessControlState : AccessControlState__201339279;
+    members : Map__230067015<(RoomId__1025152839, UserId__39544917), Bool>;
+    messages : List__836382695<Message__702227878>;
+    nextMessageId : {var value : Nat};
+    nextRoomId : {var value : Nat};
+    presence :
+      Map__230067015<(RoomId__1025152839, UserId__39544917),
+                      Presence__999766611>;
+    readStates :
+      Map__230067015<(RoomId__1025152839, UserId__39544917),
+                      ReadState__909345744>;
+    rooms : Map__230067015<RoomId__1025152839, Room__1061482576>;
+    typing :
+      Map__230067015<(RoomId__1025152839, UserId__39544917),
+                      TypingState__625603309>;
+    users : Map__230067015<UserId__39544917, User__587424910>
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__512397517 = {};
+type PresenceKey__216433550 = (RoomId__552949913, UserId__781796212);
+type Presence__312230701 =
+  {
+    lastSeenAt : Timestamp__753029554;
+    roomId : RoomId__77126073;
+    userId : UserId__1023572875
+  };
+type Presence__999766611 =
+  {
+    lastSeenAt : Timestamp__771871407;
+    roomId : RoomId__1025152839;
+    userId : UserId__39544917
+  };
+type ReadKey__172901498 = (RoomId__552949913, UserId__781796212);
+type ReadState__718409770 =
+  {
+    lastReadMessageId : MessageId__810287564;
+    roomId : RoomId__77126073;
+    updatedAt : Timestamp__753029554;
+    userId : UserId__1023572875
+  };
+type ReadState__909345744 =
+  {
+    lastReadMessageId : MessageId__345815942;
+    roomId : RoomId__1025152839;
+    updatedAt : Timestamp__771871407;
+    userId : UserId__39544917
+  };
+type RoomId__1025152839 = Nat;
+type RoomId__552949913 = RoomId__77126073;
+type RoomId__77126073 = RoomId__905989824;
+type RoomId__905989824 = Nat;
+type Room__1061482576 =
+  {
+    createdAt : Timestamp__771871407;
+    createdBy : UserId__39544917;
+    description : Text;
+    id : RoomId__1025152839;
+    name : Text
+  };
+type Room__39848885 =
+  {
+    createdAt : Timestamp__753029554;
+    createdBy : UserId__1023572875;
+    description : Text;
+    id : RoomId__77126073;
+    name : Text
+  };
+type Timestamp__301639476 = Int;
+type Timestamp__753029554 = Timestamp__301639476;
+type Timestamp__771871407 = Int;
+type TypingState__625603309 =
+  {
+    roomId : RoomId__1025152839;
+    updatedAt : Timestamp__771871407;
+    userId : UserId__39544917
+  };
+type TypingState__68933378 =
+  {
+    roomId : RoomId__77126073;
+    updatedAt : Timestamp__753029554;
+    userId : UserId__1023572875
+  };
+type UserId__1023572875 = UserId__158757552;
+type UserId__158757552 = Principal;
+type UserId__39544917 = Principal;
+type UserId__781796212 = UserId__1023572875;
+type UserRole__91647283 = {#admin; #guest; #user};
+type User__587424910 =
+  {
+    avatarInitial : Text;
+    displayName : Text;
+    id : UserId__39544917;
+    joinedAt : Timestamp__771871407
+  };
+type User__933853769 =
+  {
+    avatarInitial : Text;
+    displayName : Text;
+    id : UserId__1023572875;
+    joinedAt : Timestamp__753029554
+  };
+{
+  "00000000_000000" : OldActor__512397517 -> NewActor__769816496
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable members :
+    {
+      var root : Node__204828119<MemberKey__898044546, Bool>;
+      var size : Nat__227979830
+    };
+  stable messages :
+    {
+      var blockIndex : Nat__227979830;
+      var blocks : [var [var ?Message__454780518]];
+      var elementIndex : Nat__227979830
+    };
+  stable nextMessageId : {var value : Nat};
+  stable nextRoomId : {var value : Nat};
+  stable presence :
+    {
+      var root : Node__204828119<PresenceKey__216433550, Presence__312230701>;
+      var size : Nat__227979830
+    };
+  stable readStates :
+    {
+      var root : Node__204828119<ReadKey__172901498, ReadState__718409770>;
+      var size : Nat__227979830
+    };
+  stable rooms :
+    {
+      var root : Node__204828119<RoomId__77126073, Room__39848885>;
+      var size : Nat__227979830
+    };
+  stable typing :
+    {
+      var root :
+        Node__204828119<PresenceKey__216433550, TypingState__68933378>;
+      var size : Nat__227979830
+    };
+  stable users :
+    {
+      var root : Node__204828119<UserId__1023572875, User__933853769>;
+      var size : Nat__227979830
+    }
+};

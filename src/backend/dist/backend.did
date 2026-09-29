@@ -1,0 +1,138 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserId = principal;
+type User = 
+ record {
+   avatarInitial: text;
+   displayName: text;
+   id: UserId;
+   joinedAt: Timestamp;
+ };
+type Timestamp = int;
+type RoomSummary = 
+ record {
+   description: text;
+   id: RoomId;
+   isMember: bool;
+   lastMessageAt: opt Timestamp;
+   lastMessagePreview: text;
+   memberCount: nat;
+   name: text;
+ };
+type RoomId = nat;
+type RoomDetail = 
+ record {
+   members: vec User;
+   messages: vec MessageView;
+   onlineUsers: vec OnlineUser;
+   room: Room;
+   typingUsers: vec OnlineUser;
+ };
+type Room = 
+ record {
+   createdAt: Timestamp;
+   createdBy: UserId;
+   description: text;
+   id: RoomId;
+   name: text;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type OnlineUser = 
+ record {
+   avatarInitial: text;
+   displayName: text;
+   userId: UserId;
+ };
+type MessageView = 
+ record {
+   body: text;
+   id: MessageId;
+   isMine: bool;
+   isRead: bool;
+   roomId: RoomId;
+   sender: UserId;
+   senderName: text;
+   sentAt: Timestamp;
+ };
+type MessageId = nat;
+type Message = 
+ record {
+   body: text;
+   id: MessageId;
+   roomId: RoomId;
+   sender: UserId;
+   senderName: text;
+   sentAt: Timestamp;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createRoom: (name: text, description: text) -> (Room);
+  execute: (qJson: text) -> (Result) query;
+  getApiDoc: () -> (text) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getMyProfile: () -> (opt User) query;
+  getRoomDetail: (roomId: RoomId) -> (opt RoomDetail) query;
+  heartbeat: (roomId: RoomId) -> ();
+  isCallerAdmin: () -> (bool) query;
+  joinRoom: (roomId: RoomId) -> (bool);
+  leaveRoom: (roomId: RoomId) -> (bool);
+  listMessages: (roomId: RoomId) -> (vec Message) query;
+  listRooms: () -> (vec RoomSummary) query;
+  markRead: (roomId: RoomId, lastReadMessageId: MessageId) -> ();
+  registerUser: (displayName: text) -> (User);
+  schema: () -> (text) query;
+  sendMessage: (roomId: RoomId, body: text) -> (opt Message);
+  setTyping: (roomId: RoomId, isTyping: bool) -> ();
+}
